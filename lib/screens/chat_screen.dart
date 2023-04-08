@@ -52,7 +52,7 @@ class ChatScreen extends StatelessWidget {
                         fontSize: 12,
                         color: Theme.of(context)
                             .colorScheme
-                            .onSurface
+                            .onSecondary
                             .withOpacity(0.5),
                       ),
                     ),

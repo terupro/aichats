@@ -94,12 +94,26 @@ class _ToggleButtonState extends State<ToggleButton>
               : widget._inputMode == InputMode.text
                   ? widget._sendTextMessage
                   : widget._sendVoiceMessage,
-          child: Icon(
-            widget._inputMode == InputMode.text
-                ? Icons.send
-                : widget._isListening
-                    ? Icons.mic_off
-                    : Icons.mic,
+          child: Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              boxShadow: [
+                if (widget._isListening)
+                  BoxShadow(
+                    color: Colors.redAccent.withOpacity(0.4),
+                    spreadRadius: 2,
+                    blurRadius: 4,
+                    offset: const Offset(0, 1),
+                  ),
+              ],
+            ),
+            child: Icon(
+              widget._inputMode == InputMode.text
+                  ? Icons.send
+                  : widget._isListening
+                      ? Icons.mic_off
+                      : Icons.mic,
+            ),
           ),
         ),
       ],
