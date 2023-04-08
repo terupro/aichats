@@ -4,10 +4,10 @@ class ChatItem extends StatelessWidget {
   final String text;
   final bool isMe;
   const ChatItem({
-    super.key,
+    Key? key,
     required this.text,
     required this.isMe,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,21 +22,21 @@ class ChatItem extends StatelessWidget {
             isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: [
           if (!isMe) ProfileContainer(isMe: isMe),
-          if (!isMe) const SizedBox(width: 15),
+          if (!isMe) const SizedBox(width: 12),
           Container(
-            padding: const EdgeInsets.all(15),
+            padding: const EdgeInsets.all(12),
             constraints: BoxConstraints(
-              maxWidth: MediaQuery.of(context).size.width * 0.60,
+              maxWidth: MediaQuery.of(context).size.width * 0.65,
             ),
             decoration: BoxDecoration(
               color: isMe
                   ? Theme.of(context).colorScheme.secondary
                   : Colors.grey.shade800,
               borderRadius: BorderRadius.only(
-                topLeft: const Radius.circular(15),
-                topRight: const Radius.circular(15),
-                bottomLeft: Radius.circular(isMe ? 15 : 0),
-                bottomRight: Radius.circular(isMe ? 0 : 15),
+                topLeft: const Radius.circular(12),
+                topRight: const Radius.circular(12),
+                bottomLeft: Radius.circular(isMe ? 12 : 0),
+                bottomRight: Radius.circular(isMe ? 0 : 12),
               ),
             ),
             child: Text(
@@ -46,7 +46,7 @@ class ChatItem extends StatelessWidget {
               ),
             ),
           ),
-          if (isMe) const SizedBox(width: 15),
+          if (isMe) const SizedBox(width: 12),
           if (isMe) ProfileContainer(isMe: isMe),
         ],
       ),
@@ -56,10 +56,9 @@ class ChatItem extends StatelessWidget {
 
 class ProfileContainer extends StatelessWidget {
   const ProfileContainer({
-    super.key,
+    Key? key,
     required this.isMe,
-  });
-
+  }) : super(key: key);
   final bool isMe;
 
   @override
@@ -73,10 +72,10 @@ class ProfileContainer extends StatelessWidget {
             ? Theme.of(context).colorScheme.secondary
             : Colors.grey.shade800,
         borderRadius: BorderRadius.only(
-          topLeft: const Radius.circular(10),
-          topRight: const Radius.circular(10),
-          bottomLeft: Radius.circular(isMe ? 0 : 15),
-          bottomRight: Radius.circular(isMe ? 15 : 0),
+          topLeft: const Radius.circular(8),
+          topRight: const Radius.circular(8),
+          bottomLeft: Radius.circular(isMe ? 0 : 12),
+          bottomRight: Radius.circular(isMe ? 12 : 0),
         ),
       ),
       child: Icon(

@@ -77,6 +77,12 @@ class _ToggleButtonState extends State<ToggleButton>
                         .colorScheme
                         .secondary
                         .withOpacity(0.3 * opacity),
+                    border: Border.all(
+                      width: 3,
+                      color: isDarkMode
+                          ? Colors.white.withOpacity(opacity)
+                          : Colors.black.withOpacity(opacity),
+                    ),
                   ),
                 ),
               );
@@ -85,7 +91,7 @@ class _ToggleButtonState extends State<ToggleButton>
         ElevatedButton(
           style: ElevatedButton.styleFrom(
             backgroundColor: Theme.of(context).colorScheme.secondary,
-            foregroundColor: iconColor,
+            foregroundColor: widget._isReplying ? Colors.grey : iconColor,
             shape: const CircleBorder(),
             padding: const EdgeInsets.all(15),
           ),

@@ -50,7 +50,7 @@ class _TextAndVoiceFieldState extends ConsumerState<TextAndVoiceField> {
           ),
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.surface,
-            borderRadius: BorderRadius.circular(24),
+            borderRadius: BorderRadius.circular(999),
             boxShadow: const [
               BoxShadow(
                 color: Colors.black12,
