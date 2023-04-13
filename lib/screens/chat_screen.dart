@@ -23,14 +23,6 @@ class ChatScreen extends StatelessWidget {
         drawer: const DrawerMenu(),
         body: Stack(
           children: [
-            Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/images/background.jpg'),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
             Column(
               children: [
                 Expanded(
@@ -69,14 +61,12 @@ class ChatScreen extends StatelessWidget {
       children: [
         Icon(
           CupertinoIcons.chat_bubble_2,
-          size: 60,
+          size: 80,
           color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.4),
         ),
-        const SizedBox(height: 4),
         Text(
-          "AIに質問してみよう!",
-          style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                fontStyle: FontStyle.italic,
+          "AIとの会話を始めよう",
+          style: Theme.of(context).textTheme.labelLarge!.copyWith(
                 color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.4),
                 fontWeight: FontWeight.bold,
               ),
