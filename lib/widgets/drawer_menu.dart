@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DrawerMenu extends StatefulWidget {
@@ -25,9 +26,9 @@ class _DrawerMenuState extends State<DrawerMenu> {
                   radius: 32,
                   backgroundColor: Theme.of(context).colorScheme.onSecondary,
                   child: Icon(
-                    Icons.chat_bubble_outline,
+                    CupertinoIcons.chat_bubble_2,
                     color: Theme.of(context).colorScheme.secondary,
-                    size: 32,
+                    size: 48,
                   ),
                 ),
                 const SizedBox(height: 8),
