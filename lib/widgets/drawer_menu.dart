@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 
 class DrawerMenu extends StatefulWidget {
   const DrawerMenu({super.key});
@@ -58,6 +59,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
             title: const Text('アプリをシェアする'),
             onTap: () {
               Navigator.pop(context);
+              _shareApp();
             },
           ),
           ListTile(
@@ -92,5 +94,10 @@ class _DrawerMenuState extends State<DrawerMenu> {
         ],
       ),
     );
+  }
+
+  void _shareApp() async {
+    await Share.share(
+        'AIChatsアプリで手軽にAIと会話しよう！言語やトピックを選んで、いつでもどこでも会話ができます。友達や家族と共有して、みんなでAIとの会話を楽しんでみませんか？シェアリンクはこちら：https://example.com/aichats」 https://example.com/aichats');
   }
 }
