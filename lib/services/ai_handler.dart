@@ -30,7 +30,7 @@ class AIHandler {
         temperature: 0.5,
         topP: 0.9,
         presencePenalty: 0.2,
-        maxToken: 200,
+        maxToken: 400,
         model: ChatModel.ChatGptTurbo0301Model,
       );
 

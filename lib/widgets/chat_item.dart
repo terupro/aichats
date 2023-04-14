@@ -39,10 +39,12 @@ class ChatItem extends StatelessWidget {
                 bottomRight: Radius.circular(isMe ? 0 : 12),
               ),
             ),
-            child: Text(
-              text,
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.onSecondary,
+            child: SelectionArea(
+              child: Text(
+                text,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSecondary,
+                ),
               ),
             ),
           ),
