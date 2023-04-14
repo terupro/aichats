@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -36,10 +37,10 @@ class _DrawerMenuState extends State<DrawerMenu> {
                 CircleAvatar(
                   radius: 32,
                   backgroundColor: Theme.of(context).colorScheme.onSecondary,
-                  child: Icon(
-                    CupertinoIcons.chat_bubble_2,
+                  child: SvgPicture.asset(
+                    "images/logo.svg",
                     color: Theme.of(context).colorScheme.secondary,
-                    size: 48,
+                    height: 48,
                   ),
                 ),
                 const SizedBox(height: 8),

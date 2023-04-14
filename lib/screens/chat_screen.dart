@@ -2,6 +2,7 @@ import 'package:aichats/widgets/drawer_menu.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../providers/chats_provider.dart';
 import '../widgets/chat_item.dart';
 
@@ -59,10 +60,10 @@ class ChatScreen extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Icon(
-          CupertinoIcons.chat_bubble_2,
-          size: 80,
+        SvgPicture.asset(
+          "images/logo.svg",
           color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.4),
+          height: 80,
         ),
         Text(
           "AIとの会話を始めよう",

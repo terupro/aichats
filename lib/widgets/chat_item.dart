@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ChatItem extends StatelessWidget {
   final String text;
@@ -80,10 +81,17 @@ class ProfileContainer extends StatelessWidget {
           bottomRight: Radius.circular(isMe ? 12 : 0),
         ),
       ),
-      child: Icon(
-        isMe ? Icons.face : Icons.android_outlined,
-        color: Theme.of(context).colorScheme.onSecondary,
-      ),
+      child: isMe
+          ? Icon(
+              Icons.face,
+              color: Theme.of(context).colorScheme.onSecondary,
+              size: 26,
+            )
+          : SvgPicture.asset(
+              'images/logo.svg',
+              height: 32,
+              width: 32,
+            ),
     );
   }
 }
