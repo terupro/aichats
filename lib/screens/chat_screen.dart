@@ -60,7 +60,7 @@ class ChatScreen extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SvgPicture.asset(
-          "images/logo.svg",
+          "assets/images/logo.svg",
           color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.4),
           height: 100,
         ),

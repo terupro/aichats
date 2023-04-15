@@ -35,7 +35,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SvgPicture.asset(
-                  "images/logo.svg",
+                  "assets/images/logo.svg",
                   color: Theme.of(context).colorScheme.onSecondary,
                   height: 60,
                 ),

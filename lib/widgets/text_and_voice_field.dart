@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/chat_model.dart';
 import '../providers/chats_provider.dart';
@@ -124,14 +125,17 @@ class _TextAndVoiceFieldState extends ConsumerState<TextAndVoiceField> {
 
   void sendVoiceMessage() async {
     if (!voiceHandler.isEnabled) {
+      HapticFeedback.mediumImpact();
       print('Not supported');
       return;
     }
     if (voiceHandler.speechToText.isListening) {
+      HapticFeedback.mediumImpact();
       await voiceHandler.stopListening();
       setListeningState(false);
     } else {
       setListeningState(true);
+      HapticFeedback.mediumImpact();
       final result = await voiceHandler.startListening();
       setListeningState(false);
       sendTextMessage(result);
