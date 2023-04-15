@@ -4,16 +4,16 @@ final lightTheme = ThemeData(
   colorScheme: ThemeData.light().colorScheme.copyWith(
         primary: Colors.white,
         onPrimary: Colors.black,
-        secondary: Colors.deepOrange,
+        secondary: const Color(0xFF4A5568),
         onSecondary: Colors.white,
       ),
 );
 
 final darkTheme = ThemeData.dark().copyWith(
   colorScheme: ThemeData.dark().colorScheme.copyWith(
-        primary: Colors.blueGrey,
+        primary: Colors.black,
         onPrimary: Colors.white,
-        secondary: Colors.blueGrey,
+        secondary: const Color(0xFF4A5568),
         onSecondary: Colors.white,
       ),
 );

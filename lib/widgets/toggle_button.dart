@@ -119,6 +119,7 @@ class _ToggleButtonState extends State<ToggleButton>
                   : widget._isListening
                       ? Icons.mic_off
                       : Icons.mic,
+              color: Colors.white,
             ),
           ),
         ),

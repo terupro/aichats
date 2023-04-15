@@ -34,16 +34,12 @@ class _DrawerMenuState extends State<DrawerMenu> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CircleAvatar(
-                  radius: 32,
-                  backgroundColor: Theme.of(context).colorScheme.onSecondary,
-                  child: SvgPicture.asset(
-                    "images/logo.svg",
-                    color: Theme.of(context).colorScheme.secondary,
-                    height: 48,
-                  ),
+                SvgPicture.asset(
+                  "images/logo.svg",
+                  color: Theme.of(context).colorScheme.onSecondary,
+                  height: 60,
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 4),
                 Text(
                   'AIChats',
                   style: TextStyle(
@@ -51,7 +47,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
                     color: Theme.of(context).colorScheme.onSecondary,
                   ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 4),
                 Text(
                   'Powered by ChatGPT',
                   style: TextStyle(
@@ -59,7 +55,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
                     color: Theme.of(context)
                         .colorScheme
                         .onSecondary
-                        .withOpacity(0.5),
+                        .withOpacity(0.6),
                   ),
                 ),
               ],

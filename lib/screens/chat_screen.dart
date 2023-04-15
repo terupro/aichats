@@ -1,5 +1,4 @@
 import 'package:aichats/widgets/drawer_menu.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -63,10 +62,10 @@ class ChatScreen extends StatelessWidget {
         SvgPicture.asset(
           "images/logo.svg",
           color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.4),
-          height: 80,
+          height: 100,
         ),
         Text(
-          "AIとの会話を始めよう",
+          "チャットを開始しよう",
           style: Theme.of(context).textTheme.labelLarge!.copyWith(
                 color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.4),
                 fontWeight: FontWeight.bold,
