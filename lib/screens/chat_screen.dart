@@ -65,7 +65,10 @@ class ChatScreen extends StatelessWidget {
       await showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text('AIChatsの使い方'),
+          title: Text(
+            'AIChatsの使い方',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
           content: SingleChildScrollView(
             child: ListBody(
               children: [
@@ -108,7 +111,7 @@ class ChatScreen extends StatelessWidget {
           height: 100,
         ),
         Text(
-          "チャットを開始しよう",
+          "チャットを始めよう",
           style: Theme.of(context).textTheme.labelLarge!.copyWith(
                 color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.4),
                 fontWeight: FontWeight.bold,

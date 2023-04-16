@@ -1,10 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'chat_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
+  const OnboardingScreen({super.key});
+
   @override
   _OnboardingScreenState createState() => _OnboardingScreenState();
 }
@@ -23,12 +24,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   Widget _indicator(bool isActive) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 4.0),
+      margin: const EdgeInsets.symmetric(horizontal: 4.0),
       height: 8.0,
       width: isActive ? 24.0 : 16.0,
       decoration: BoxDecoration(
         color: isActive ? Colors.blue : Colors.grey,
-        borderRadius: BorderRadius.all(Radius.circular(12)),
+        borderRadius: const BorderRadius.all(Radius.circular(12)),
       ),
     );
   }
@@ -36,7 +37,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF121212),
+      backgroundColor: const Color(0xFF303030),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
         child: Padding(
@@ -56,19 +57,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   },
                   children: <Widget>[
                     _buildPage(
-                      image: 'assets/images/icon.png',
+                      image: 'assets/images/onboarding_1.png',
                       text: 'AIChatsへようこそ！',
                     ),
                     _buildPage(
-                      image: 'assets/images/icon.png',
+                      image: 'assets/images/onboarding_2.png',
                       text: 'AIChatsは、あなたとAIが簡単に会話できるアプリです。',
                     ),
                     _buildPage(
-                      image: 'assets/images/icon.png',
-                      text: 'メッセージを入力して、AIとの会話を楽しみましょう！',
+                      image: 'assets/images/onboarding_3.png',
+                      text: '音声入力対応！メッセージを入力して、AIとの会話を楽しみましょう！',
                     ),
                     _buildPage(
-                      image: 'assets/images/icon.png',
+                      image: 'assets/images/onboarding_4.png',
                       text: 'それでは、AIChatsを始めてみましょう！',
                     ),
                   ],
@@ -121,7 +122,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           ? Container(
               height: 100.0,
               width: double.infinity,
-              color: Color(0xFF121212),
+              color: const Color(0xFF303030),
               child: GestureDetector(
                 onTap: () async {
                   SharedPreferences prefs =
@@ -155,7 +156,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   Widget _buildPage({required String image, required String text}) {
     return Padding(
-      padding: EdgeInsets.all(40.0),
+      padding: const EdgeInsets.all(40.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -166,10 +167,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               width: 300.0,
             ),
           ),
-          SizedBox(height: 30.0),
+          const SizedBox(height: 30.0),
           Text(
             text,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 28.0,
               color: Colors.white,
               fontWeight: FontWeight.bold,

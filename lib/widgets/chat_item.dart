@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ChatItem extends StatelessWidget {
   final String text;
@@ -86,10 +87,10 @@ class ProfileContainer extends StatelessWidget {
               color: Theme.of(context).colorScheme.onSecondary,
               size: 26,
             )
-          : Icon(
-              Icons.android,
+          : SvgPicture.asset(
+              'assets/images/ai.svg',
               color: Theme.of(context).colorScheme.onSecondary,
-              size: 26,
+              height: 36,
             ),
     );
   }
