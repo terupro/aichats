@@ -81,11 +81,6 @@ class _DrawerMenuState extends State<DrawerMenu> {
           ),
           const Divider(),
           ListTile(
-            leading: const Icon(Icons.star_outline),
-            title: const Text('プレミアムプランに登録する'),
-            onTap: _launchHelpUrl,
-          ),
-          ListTile(
             leading: const Icon(Icons.help_outline),
             title: const Text('ヘルプ＆サポート'),
             onTap: _launchHelpUrl,

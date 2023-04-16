@@ -1,5 +1,7 @@
+import 'package:aichats/screens/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'providers/active_theme_provider.dart';
 import 'screens/chat_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -7,12 +9,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'constants/themes.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  bool seenOnboarding = prefs.getBool('seen_onboarding') ?? false;
   await dotenv.load();
-  runApp(const ProviderScope(child: App()));
+  runApp(ProviderScope(child: App(seenOnboarding: seenOnboarding)));
 }
 
 class App extends ConsumerWidget {
-  const App({super.key});
+  final bool seenOnboarding;
+  const App({super.key, required this.seenOnboarding});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -28,7 +34,7 @@ class App extends ConsumerWidget {
       darkTheme: darkTheme,
       debugShowCheckedModeBanner: false,
       themeMode: activeTheme == Themes.dark ? ThemeMode.dark : ThemeMode.light,
-      home: ChatScreen(),
+      home: seenOnboarding ? ChatScreen() : OnboardingScreen(),
     );
   }
 }
