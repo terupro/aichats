@@ -23,7 +23,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   Widget _indicator(bool isActive) {
-    return Container(
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 150),
       margin: const EdgeInsets.symmetric(horizontal: 4.0),
       height: 8.0,
       width: isActive ? 24.0 : 16.0,
@@ -46,7 +47,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SizedBox(
-                height: 600.0,
+                height: 600,
                 child: PageView(
                   physics: const ClampingScrollPhysics(),
                   controller: _pageController,
@@ -66,7 +67,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                     _buildPage(
                       image: 'assets/images/onboarding_3.png',
-                      text: '音声入力対応！メッセージを入力して、AIとの会話を楽しみましょう！',
+                      text: '音声入力対応！メッセージを入力して、AIとの会話を楽しみましょう。',
                     ),
                     _buildPage(
                       image: 'assets/images/onboarding_4.png',
