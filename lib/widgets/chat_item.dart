@@ -33,19 +33,13 @@ class ChatItem extends StatelessWidget {
               color: isMe
                   ? Theme.of(context).colorScheme.secondary
                   : Colors.grey.shade800,
-              borderRadius: BorderRadius.only(
-                topLeft: const Radius.circular(12),
-                topRight: const Radius.circular(12),
-                bottomLeft: Radius.circular(isMe ? 12 : 0),
-                bottomRight: Radius.circular(isMe ? 0 : 12),
-              ),
+              borderRadius: BorderRadius.circular(12),
             ),
-            child: SelectionArea(
-              child: Text(
-                text,
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.onSecondary,
-                ),
+            child: SelectableText(
+              text,
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onSecondary,
+                fontSize: 16, // テキストのフォントサイズを調整
               ),
             ),
           ),
@@ -74,12 +68,7 @@ class ProfileContainer extends StatelessWidget {
         color: isMe
             ? Theme.of(context).colorScheme.secondary
             : Colors.grey.shade800,
-        borderRadius: BorderRadius.only(
-          topLeft: const Radius.circular(8),
-          topRight: const Radius.circular(8),
-          bottomLeft: Radius.circular(isMe ? 0 : 12),
-          bottomRight: Radius.circular(isMe ? 12 : 0),
-        ),
+        borderRadius: BorderRadius.circular(20), // ボーダーの角を丸くする
       ),
       child: isMe
           ? Icon(
@@ -90,7 +79,7 @@ class ProfileContainer extends StatelessWidget {
           : SvgPicture.asset(
               'assets/images/ai.svg',
               color: Theme.of(context).colorScheme.onSecondary,
-              height: 36,
+              height: 34, // アイコンのサイズを調整
             ),
     );
   }

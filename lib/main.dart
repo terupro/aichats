@@ -25,20 +25,15 @@ class App extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final activeTheme = ref.watch(activeThemeProvider);
     return MaterialApp(
-      // よくわからない
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-
-      // localeに英語と日本語を登録する
       supportedLocales: const [
         Locale("en"),
         Locale("ja"),
       ],
-
-      // アプリのlocaleを日本語に変更する
       locale: const Locale('ja', 'JP'),
       builder: (BuildContext context, Widget? child) {
         return MediaQuery(

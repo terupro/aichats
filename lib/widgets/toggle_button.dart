@@ -28,72 +28,20 @@ class ToggleButton extends StatefulWidget {
 
 class _ToggleButtonState extends State<ToggleButton>
     with SingleTickerProviderStateMixin {
-  late final AnimationController _animationController;
-  late final Animation<double> _animation;
-
-  @override
-  void initState() {
-    _animationController = AnimationController(
-      duration: const Duration(milliseconds: 1000),
-      vsync: this,
-    );
-
-    _animation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
-    );
-
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
-    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final iconColor = Theme.of(context).colorScheme.onSecondary;
+    final padding = MediaQuery.of(context).size.width * 0.025; // 画面幅の 3% を使用
 
     return Stack(
       alignment: Alignment.center,
       children: [
-        if (widget._isListening)
-          AnimatedBuilder(
-            animation: _animation,
-            builder: (context, child) {
-              final value = _animation.value;
-              final opacity = 1.0 - value;
-              final size = 60.0 + (20.0 * value);
-              return Opacity(
-                opacity: opacity,
-                child: Container(
-                  width: size,
-                  height: size,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Theme.of(context)
-                        .colorScheme
-                        .secondary
-                        .withOpacity(0.3 * opacity),
-                    border: Border.all(
-                      width: 3,
-                      color: isDarkMode
-                          ? Colors.white.withOpacity(opacity)
-                          : Colors.black.withOpacity(opacity),
-                    ),
-                  ),
-                ),
-              );
-            },
-          ),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
             backgroundColor: Theme.of(context).colorScheme.secondary,
             foregroundColor: widget._isReplying ? Colors.grey : iconColor,
             shape: const CircleBorder(),
-            padding: const EdgeInsets.all(15),
+            padding: EdgeInsets.all(padding),
           ),
           onPressed: widget._isReplying
               ? null

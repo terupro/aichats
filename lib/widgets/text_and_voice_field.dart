@@ -13,7 +13,7 @@ enum InputMode {
 }
 
 class TextAndVoiceField extends ConsumerStatefulWidget {
-  const TextAndVoiceField({super.key});
+  const TextAndVoiceField({Key? key}) : super(key: key);
 
   @override
   ConsumerState<TextAndVoiceField> createState() => _TextAndVoiceFieldState();
@@ -51,7 +51,7 @@ class _TextAndVoiceFieldState extends ConsumerState<TextAndVoiceField> {
           ),
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.surface,
-            borderRadius: BorderRadius.circular(999),
+            borderRadius: BorderRadius.circular(30),
             boxShadow: const [
               BoxShadow(
                 color: Colors.black12,
@@ -64,6 +64,8 @@ class _TextAndVoiceFieldState extends ConsumerState<TextAndVoiceField> {
             children: [
               Expanded(
                 child: TextField(
+                  minLines: 1,
+                  maxLines: 4,
                   controller: _messageController,
                   onChanged: (value) {
                     value.isNotEmpty
@@ -98,8 +100,8 @@ class _TextAndVoiceFieldState extends ConsumerState<TextAndVoiceField> {
           bottom: 0,
           top: 0,
           child: SizedBox(
-            width: 60,
-            height: 60,
+            width: MediaQuery.of(context).size.width * 0.15, // 画面幅の 15% を使用
+            height: MediaQuery.of(context).size.height * 0.08, // 画面高さの 8% を使用
             child: ToggleButton(
               isListening: _isListening,
               isReplying: _isReplying,
@@ -126,7 +128,6 @@ class _TextAndVoiceFieldState extends ConsumerState<TextAndVoiceField> {
   void sendVoiceMessage() async {
     if (!voiceHandler.isEnabled) {
       HapticFeedback.mediumImpact();
-      print('Not supported');
       return;
     }
     if (voiceHandler.speechToText.isListening) {
