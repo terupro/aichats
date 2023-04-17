@@ -45,6 +45,8 @@ dependencies:
   flutter_native_splash: ^2.2.19
   audioplayers: ^4.0.1
   shared_preferences: ^2.1.0
+  flutter_localizations:
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:

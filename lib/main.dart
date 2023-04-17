@@ -1,6 +1,7 @@
 import 'package:aichats/screens/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'providers/active_theme_provider.dart';
 import 'screens/chat_screen.dart';
@@ -24,6 +25,21 @@ class App extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final activeTheme = ref.watch(activeThemeProvider);
     return MaterialApp(
+      // よくわからない
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+
+      // localeに英語と日本語を登録する
+      supportedLocales: const [
+        Locale("en"),
+        Locale("ja"),
+      ],
+
+      // アプリのlocaleを日本語に変更する
+      locale: const Locale('ja', 'JP'),
       builder: (BuildContext context, Widget? child) {
         return MediaQuery(
           data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
@@ -34,7 +50,7 @@ class App extends ConsumerWidget {
       darkTheme: darkTheme,
       debugShowCheckedModeBanner: false,
       themeMode: activeTheme == Themes.dark ? ThemeMode.dark : ThemeMode.light,
-      home: seenOnboarding ? ChatScreen() : OnboardingScreen(),
+      home: seenOnboarding ? ChatScreen() : const OnboardingScreen(),
     );
   }
 }
