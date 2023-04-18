@@ -114,7 +114,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         ),
                       ),
                     )
-                  : Text(''),
+                  : const Text(''),
             ],
           ),
         ),
@@ -136,7 +136,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                   );
                 },
-                child: Center(
+                child: const Center(
                   child: Padding(
                     padding: EdgeInsets.only(bottom: 30.0),
                     child: Text(
@@ -151,7 +151,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 ),
               ),
             )
-          : Text(''),
+          : const Text(''),
     );
   }
 
