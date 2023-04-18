@@ -1,14 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class ChatItem extends StatelessWidget {
-  final String text;
+class ChatItem extends StatefulWidget {
+  final String message;
   final bool isMe;
+  final Animation<double> typingAnimation;
   const ChatItem({
     Key? key,
-    required this.text,
+    required this.message,
     required this.isMe,
+    required this.typingAnimation,
   }) : super(key: key);
+
+  @override
+  State<ChatItem> createState() => _ChatItemState();
+}
+
+class _ChatItemState extends State<ChatItem> {
+  Widget _buildColoredDot(int index, Animation<double> animation) {
+    double animationValue = (animation.value * 3) - index;
+    if (animationValue < 0) animationValue = 0;
+    if (animationValue > 1) animationValue = 1;
+    return Icon(
+      Icons.circle,
+      size: 10,
+      color: Color.lerp(
+        Theme.of(context).colorScheme.onSecondary,
+        Colors.grey.shade600,
+        animationValue,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,31 +42,52 @@ class ChatItem extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisAlignment:
-            isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+            widget.isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: [
-          if (!isMe) ProfileContainer(isMe: isMe),
-          if (!isMe) const SizedBox(width: 12),
+          if (!widget.isMe) ProfileContainer(isMe: widget.isMe),
+          if (!widget.isMe) const SizedBox(width: 12),
           Container(
             padding: const EdgeInsets.all(12),
             constraints: BoxConstraints(
               maxWidth: MediaQuery.of(context).size.width * 0.65,
             ),
             decoration: BoxDecoration(
-              color: isMe
+              color: widget.isMe
                   ? Theme.of(context).colorScheme.secondary
                   : Colors.grey.shade800,
               borderRadius: BorderRadius.circular(12),
             ),
-            child: SelectableText(
-              text,
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.onSecondary,
-                fontSize: 16, // テキストのフォントサイズを調整
-              ),
-            ),
+            child: widget.message == '...'
+                ? SizedBox(
+                    width: 48,
+                    height: 24,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: List.generate(3, (index) {
+                        return AnimatedBuilder(
+                          animation: widget.typingAnimation,
+                          builder: (context, child) {
+                            return _buildColoredDot(
+                              index,
+                              widget.typingAnimation,
+                            );
+                          },
+                        );
+                      }),
+                    ),
+                  )
+                : SelectableText(
+                    widget.message,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: widget.isMe
+                          ? Theme.of(context).colorScheme.onSecondary
+                          : Theme.of(context).colorScheme.onSecondary,
+                    ),
+                  ),
           ),
-          if (isMe) const SizedBox(width: 12),
-          if (isMe) ProfileContainer(isMe: isMe),
+          if (widget.isMe) const SizedBox(width: 12),
+          if (widget.isMe) ProfileContainer(isMe: widget.isMe),
         ],
       ),
     );
@@ -68,18 +111,18 @@ class ProfileContainer extends StatelessWidget {
         color: isMe
             ? Theme.of(context).colorScheme.secondary
             : Colors.grey.shade800,
-        borderRadius: BorderRadius.circular(20), // ボーダーの角を丸くする
+        borderRadius: BorderRadius.circular(20),
       ),
       child: isMe
           ? Icon(
               Icons.face,
               color: Theme.of(context).colorScheme.onSecondary,
-              size: 26,
+              size: 28,
             )
           : SvgPicture.asset(
               'assets/images/ai.svg',
               color: Theme.of(context).colorScheme.onSecondary,
-              height: 34, // アイコンのサイズを調整
+              height: 36,
             ),
     );
   }

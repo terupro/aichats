@@ -19,7 +19,8 @@ class TextAndVoiceField extends ConsumerStatefulWidget {
   ConsumerState<TextAndVoiceField> createState() => _TextAndVoiceFieldState();
 }
 
-class _TextAndVoiceFieldState extends ConsumerState<TextAndVoiceField> {
+class _TextAndVoiceFieldState extends ConsumerState<TextAndVoiceField>
+    with TickerProviderStateMixin {
   InputMode _inputMode = InputMode.voice;
   final _messageController = TextEditingController();
   final AIHandler _openAI = AIHandler();
@@ -27,15 +28,25 @@ class _TextAndVoiceFieldState extends ConsumerState<TextAndVoiceField> {
   var _isReplying = false;
   var _isListening = false;
 
+  late AnimationController _typingAnimationController;
+  late Animation<double> _typingAnimation;
+
   @override
   void initState() {
     voiceHandler.initSpeech();
+    _typingAnimationController = AnimationController(
+      duration: const Duration(milliseconds: 800),
+      vsync: this,
+    )..repeat(reverse: true);
+    _typingAnimation =
+        Tween<double>(begin: 0, end: 1).animate(_typingAnimationController);
     super.initState();
   }
 
   @override
   void dispose() {
     _messageController.dispose();
+    _typingAnimationController.dispose();
     _openAI.dispose();
     super.dispose();
   }
@@ -127,16 +138,13 @@ class _TextAndVoiceFieldState extends ConsumerState<TextAndVoiceField> {
 
   void sendVoiceMessage() async {
     if (!voiceHandler.isEnabled) {
-      HapticFeedback.mediumImpact();
       return;
     }
     if (voiceHandler.speechToText.isListening) {
-      HapticFeedback.mediumImpact();
       await voiceHandler.stopListening();
       setListeningState(false);
     } else {
       setListeningState(true);
-      HapticFeedback.mediumImpact();
       final result = await voiceHandler.startListening();
       setListeningState(false);
       sendTextMessage(result);
@@ -146,7 +154,7 @@ class _TextAndVoiceFieldState extends ConsumerState<TextAndVoiceField> {
   void sendTextMessage(String message) async {
     setReplyingState(true);
     addToChatList(message, true, DateTime.now().toString());
-    addToChatList('入力中...', false, 'typing');
+    addToChatList('...', false, 'typing');
     setInputMode(InputMode.voice);
     final aiResponse = await _openAI.getResponse(message);
     removeTyping();
@@ -177,6 +185,7 @@ class _TextAndVoiceFieldState extends ConsumerState<TextAndVoiceField> {
       id: id,
       message: message,
       isMe: isMe,
+      typingAnimation: _typingAnimation,
     ));
   }
 }

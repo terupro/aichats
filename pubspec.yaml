@@ -43,7 +43,6 @@ dependencies:
   url_launcher: ^6.1.10
   flutter_launcher_icons: ^0.13.0
   flutter_native_splash: ^2.2.19
-  audioplayers: ^4.0.1
   shared_preferences: ^2.1.0
   flutter_localizations:
     sdk: flutter
@@ -73,7 +72,6 @@ flutter:
   assets:
     - .env
     - assets/images/
-    - assets/sounds/
 
 flutter_icons:
   android: true

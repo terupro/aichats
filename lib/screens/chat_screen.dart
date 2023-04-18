@@ -33,8 +33,9 @@ class ChatScreen extends StatelessWidget {
                             reverse: true,
                             itemCount: chats.length,
                             itemBuilder: (context, index) => ChatItem(
-                              text: chats[index].message,
+                              message: chats[index].message,
                               isMe: chats[index].isMe,
+                              typingAnimation: chats[index].typingAnimation,
                             ),
                           )
                         : _buildEmptyMessageUI(context);

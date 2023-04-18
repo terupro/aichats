@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'text_and_voice_field.dart';
 
 class ToggleButton extends StatefulWidget {
@@ -43,11 +44,19 @@ class _ToggleButtonState extends State<ToggleButton>
             shape: const CircleBorder(),
             padding: EdgeInsets.all(padding),
           ),
-          onPressed: widget._isReplying
-              ? null
-              : widget._inputMode == InputMode.text
-                  ? widget._sendTextMessage
-                  : widget._sendVoiceMessage,
+          onPressed: () {
+            if (widget._isReplying) {
+              return;
+            } else {
+              if (widget._inputMode == InputMode.text) {
+                HapticFeedback.mediumImpact();
+                widget._sendTextMessage();
+              } else {
+                HapticFeedback.mediumImpact();
+                widget._sendVoiceMessage();
+              }
+            }
+          },
           child: Container(
             decoration: BoxDecoration(
               shape: BoxShape.circle,
