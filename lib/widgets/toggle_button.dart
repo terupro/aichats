@@ -44,19 +44,14 @@ class _ToggleButtonState extends State<ToggleButton>
             shape: const CircleBorder(),
             padding: EdgeInsets.all(padding),
           ),
-          onPressed: () {
-            if (widget._isReplying) {
-              return;
-            } else {
-              if (widget._inputMode == InputMode.text) {
-                HapticFeedback.mediumImpact();
-                widget._sendTextMessage();
-              } else {
-                HapticFeedback.mediumImpact();
-                widget._sendVoiceMessage();
-              }
-            }
-          },
+          onPressed: widget._isReplying
+              ? null
+              : (widget._inputMode == InputMode.text
+                  ? widget._sendTextMessage
+                  : () {
+                      HapticFeedback.mediumImpact();
+                      widget._sendVoiceMessage();
+                    }),
           child: Container(
             decoration: BoxDecoration(
               shape: BoxShape.circle,
