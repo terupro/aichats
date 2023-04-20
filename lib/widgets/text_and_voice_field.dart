@@ -1,7 +1,8 @@
 import 'package:aichats/screens/subscription_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 import '../models/chat_model.dart';
 import '../providers/chats_provider.dart';
 import '../services/ai_handler.dart';
@@ -163,16 +164,14 @@ class _TextAndVoiceFieldState extends ConsumerState<TextAndVoiceField>
     int chatCount = prefs.getInt(_chatCountKey) ?? 0;
     bool isSubscribed = prefs.getBool('is_subscribed') ?? false;
 
+    // サブスク登録してなければ表示される
     if (chatCount > 1 && !isSubscribed) {
-      // サブスクリプション登録画面を表示する処理を実装
-      subScriptionScreen(context);
+      showCustomModalBottomSheet(context);
       return;
     }
-
     // チャット送信回数をインクリメント
     chatCount++;
     await prefs.setInt(_chatCountKey, chatCount);
-
     setReplyingState(true);
     addToChatList(message, true, DateTime.now().toString());
     addToChatList('...', false, 'typing');

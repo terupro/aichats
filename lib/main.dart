@@ -3,15 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'providers/active_theme_provider.dart';
 import 'screens/chat_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'constants/themes.dart';
+
+final _configuration = PurchasesConfiguration('app88e7eec4be');
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Purchases.configure(_configuration);
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   SharedPreferences prefs = await SharedPreferences.getInstance();
   bool seenOnboarding = prefs.getBool('seen_onboarding') ?? false;

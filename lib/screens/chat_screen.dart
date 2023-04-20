@@ -1,9 +1,7 @@
-import 'package:aichats/screens/subscription_screen.dart';
 import 'package:aichats/widgets/drawer_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:purchases_flutter/purchases_flutter.dart';
 import '../providers/chats_provider.dart';
 import '../widgets/chat_item.dart';
 import '../widgets/my_app_bar.dart';
