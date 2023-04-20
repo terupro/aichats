@@ -1,3 +1,4 @@
+import 'package:aichats/screens/subscription_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,6 +7,9 @@ import '../providers/chats_provider.dart';
 import '../services/ai_handler.dart';
 import '../services/voice_handler.dart';
 import 'toggle_button.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+const _chatCountKey = 'chat_count';
 
 enum InputMode {
   text,
@@ -34,6 +38,8 @@ class _TextAndVoiceFieldState extends ConsumerState<TextAndVoiceField>
   @override
   void initState() {
     voiceHandler.initSpeech();
+    _loadChatHistory();
+
     _typingAnimationController = AnimationController(
       duration: const Duration(milliseconds: 800),
       vsync: this,
@@ -152,6 +158,21 @@ class _TextAndVoiceFieldState extends ConsumerState<TextAndVoiceField>
   }
 
   void sendTextMessage(String message) async {
+    // サブスクリプション登録画面を表示するかどうかをチェック
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int chatCount = prefs.getInt(_chatCountKey) ?? 0;
+    bool isSubscribed = prefs.getBool('is_subscribed') ?? false;
+
+    if (chatCount > 1 && !isSubscribed) {
+      // サブスクリプション登録画面を表示する処理を実装
+      subScriptionScreen(context);
+      return;
+    }
+
+    // チャット送信回数をインクリメント
+    chatCount++;
+    await prefs.setInt(_chatCountKey, chatCount);
+
     setReplyingState(true);
     addToChatList(message, true, DateTime.now().toString());
     addToChatList('...', false, 'typing');
@@ -187,5 +208,26 @@ class _TextAndVoiceFieldState extends ConsumerState<TextAndVoiceField>
       isMe: isMe,
       typingAnimation: _typingAnimation,
     ));
+  }
+
+  void saveMessageToPrefs(String message, bool isMe, String id) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> chatHistory = prefs.getStringList('chat_history') ?? [];
+
+    chatHistory.add(id);
+    chatHistory.add(message);
+    chatHistory.add(isMe.toString());
+
+    await prefs.setStringList('chat_history', chatHistory);
+  }
+
+  void _loadChatHistory() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> chatHistory = prefs.getStringList('chat_history') ?? [];
+
+    for (int i = 0; i < chatHistory.length; i += 3) {
+      addToChatList(
+          chatHistory[i + 1], chatHistory[i + 2] == 'true', chatHistory[i]);
+    }
   }
 }

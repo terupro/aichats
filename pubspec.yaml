@@ -46,6 +46,7 @@ dependencies:
   shared_preferences: ^2.1.0
   flutter_localizations:
     sdk: flutter
+  purchases_flutter: ^4.11.2
 
 dev_dependencies:
   flutter_test:

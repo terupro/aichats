@@ -221,6 +221,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  freezed_annotation:
+    dependency: transitive
+    description:
+      name: freezed_annotation
+      sha256: aeac15850ef1b38ee368d4c53ba9a847e900bb2c53a4db3f6881cbb3cb684338
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.0"
   html:
     dependency: transitive
     description:
@@ -421,6 +429,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.2.4"
+  purchases_flutter:
+    dependency: "direct main"
+    description:
+      name: purchases_flutter
+      sha256: "5ff2964ab7bf6c4c08cfe5a18c7c1e88e00c2caf530cddf02544e04a8831c900"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.11.2"
   riverpod:
     dependency: transitive
     description:
