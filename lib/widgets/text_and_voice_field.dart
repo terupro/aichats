@@ -32,6 +32,7 @@ class _TextAndVoiceFieldState extends ConsumerState<TextAndVoiceField>
   final VoiceHandler voiceHandler = VoiceHandler();
   var _isReplying = false;
   var _isListening = false;
+  bool isSubscribed = false;
 
   late AnimationController _typingAnimationController;
   late Animation<double> _typingAnimation;
@@ -47,6 +48,20 @@ class _TextAndVoiceFieldState extends ConsumerState<TextAndVoiceField>
     )..repeat(reverse: true);
     _typingAnimation =
         Tween<double>(begin: 0, end: 1).animate(_typingAnimationController);
+    // 顧客が契約内容を変更するたびに呼び出す
+    Purchases.addCustomerInfoUpdateListener((_) => updateCustomerStatus());
+    updateCustomerStatus();
+  }
+
+  Future updateCustomerStatus() async {
+    final customerInfo = await Purchases.getCustomerInfo();
+    setState(() {
+      // アクセス権のあるものだけ取得する
+      final entitlement = customerInfo.entitlements.active['unlimited_chat'];
+      // アクセス権があるかどうかを確認する
+      isSubscribed = entitlement != null;
+    });
+
     super.initState();
   }
 
@@ -161,7 +176,7 @@ class _TextAndVoiceFieldState extends ConsumerState<TextAndVoiceField>
   void sendTextMessage(String message) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int chatCount = prefs.getInt(_chatCountKey) ?? 0;
-    bool isSubscribed = prefs.getBool('is_subscribed') ?? false;
+
     if (chatCount > 1 && !isSubscribed) {
       showCustomModalBottomSheet(context);
       return;

@@ -10,25 +10,6 @@ class CustomModalBottomSheet extends StatefulWidget {
 }
 
 class _CustomModalBottomSheetState extends State<CustomModalBottomSheet> {
-  bool isSubscribed = false;
-  @override
-  void initState() {
-    super.initState();
-    // 顧客が契約内容を変更するたびに呼び出す
-    Purchases.addCustomerInfoUpdateListener((_) => updateCustomerStatus());
-    updateCustomerStatus();
-  }
-
-  Future updateCustomerStatus() async {
-    final customerInfo = await Purchases.getCustomerInfo();
-    setState(() {
-      // アクセス権のあるものだけ取得する
-      final entitlement = customerInfo.entitlements.active['unlimited_chat'];
-      // アクセス権があるかどうかを確認する
-      isSubscribed = entitlement != null;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -45,7 +26,6 @@ class _CustomModalBottomSheetState extends State<CustomModalBottomSheet> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Icon(isSubscribed ? Icons.paid : Icons.lock),
             Image.asset(
               'assets/images/onboarding_2.png',
               height: 300,
