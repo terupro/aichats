@@ -159,27 +159,26 @@ class _TextAndVoiceFieldState extends ConsumerState<TextAndVoiceField>
   }
 
   void sendTextMessage(String message) async {
-    // サブスクリプション登録画面を表示するかどうかをチェック
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int chatCount = prefs.getInt(_chatCountKey) ?? 0;
     bool isSubscribed = prefs.getBool('is_subscribed') ?? false;
-
-    // サブスク登録してなければ表示される
     if (chatCount > 1 && !isSubscribed) {
       showCustomModalBottomSheet(context);
       return;
+    } else {
+      if (!isSubscribed) {
+        chatCount++;
+        await prefs.setInt(_chatCountKey, chatCount);
+      }
+      setReplyingState(true);
+      addToChatList(message, true, DateTime.now().toString());
+      addToChatList('...', false, 'typing');
+      setInputMode(InputMode.voice);
+      final aiResponse = await _openAI.getResponse(message);
+      removeTyping();
+      addToChatList(aiResponse, false, DateTime.now().toString());
+      setReplyingState(false);
     }
-    // チャット送信回数をインクリメント
-    chatCount++;
-    await prefs.setInt(_chatCountKey, chatCount);
-    setReplyingState(true);
-    addToChatList(message, true, DateTime.now().toString());
-    addToChatList('...', false, 'typing');
-    setInputMode(InputMode.voice);
-    final aiResponse = await _openAI.getResponse(message);
-    removeTyping();
-    addToChatList(aiResponse, false, DateTime.now().toString());
-    setReplyingState(false);
   }
 
   void setReplyingState(bool isReplying) {

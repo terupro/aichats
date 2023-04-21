@@ -10,7 +10,8 @@ import 'screens/chat_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'constants/themes.dart';
 
-final _configuration = PurchasesConfiguration('app88e7eec4be');
+final _configuration =
+    PurchasesConfiguration('appl_mGrBTwcMzFnFWhKUJikpGashbYj');
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,12 +23,17 @@ Future<void> main() async {
   runApp(ProviderScope(child: App(seenOnboarding: seenOnboarding)));
 }
 
-class App extends ConsumerWidget {
+class App extends ConsumerStatefulWidget {
   final bool seenOnboarding;
-  const App({super.key, required this.seenOnboarding});
+  const App({Key? key, required this.seenOnboarding}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  _AppState createState() => _AppState();
+}
+
+class _AppState extends ConsumerState<App> {
+  @override
+  Widget build(BuildContext context) {
     final activeTheme = ref.watch(activeThemeProvider);
     return MaterialApp(
       localizationsDelegates: const [
@@ -50,7 +56,7 @@ class App extends ConsumerWidget {
       darkTheme: darkTheme,
       debugShowCheckedModeBanner: false,
       themeMode: activeTheme == Themes.dark ? ThemeMode.dark : ThemeMode.light,
-      home: seenOnboarding ? ChatScreen() : const OnboardingScreen(),
+      home: widget.seenOnboarding ? ChatScreen() : const OnboardingScreen(),
     );
   }
 }
