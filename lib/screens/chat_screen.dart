@@ -58,6 +58,7 @@ class ChatScreen extends StatelessWidget {
   Widget _buildEmptyMessageUI(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
       children: [
         SvgPicture.asset(
           "assets/images/logo.svg",
@@ -68,7 +69,7 @@ class ChatScreen extends StatelessWidget {
           "チャットを始めよう",
           style: Theme.of(context).textTheme.labelLarge!.copyWith(
                 color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.4),
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w800,
               ),
         ),
       ],

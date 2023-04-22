@@ -80,10 +80,7 @@ class _ChatItemState extends State<ChatItem> {
                     widget.message,
                     style: TextStyle(
                       fontSize: 16,
-                      height: 1.4,
-                      color: widget.isMe
-                          ? Theme.of(context).colorScheme.onSecondary
-                          : Theme.of(context).colorScheme.onSecondary,
+                      color: Theme.of(context).colorScheme.onSecondary,
                     ),
                   ),
           ),

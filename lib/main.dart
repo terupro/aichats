@@ -23,17 +23,12 @@ Future<void> main() async {
   runApp(ProviderScope(child: App(seenOnboarding: seenOnboarding)));
 }
 
-class App extends ConsumerStatefulWidget {
+class App extends ConsumerWidget {
   final bool seenOnboarding;
-  const App({Key? key, required this.seenOnboarding}) : super(key: key);
+  const App({super.key, required this.seenOnboarding});
 
   @override
-  _AppState createState() => _AppState();
-}
-
-class _AppState extends ConsumerState<App> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final activeTheme = ref.watch(activeThemeProvider);
     return MaterialApp(
       localizationsDelegates: const [
@@ -56,7 +51,7 @@ class _AppState extends ConsumerState<App> {
       darkTheme: darkTheme,
       debugShowCheckedModeBanner: false,
       themeMode: activeTheme == Themes.dark ? ThemeMode.dark : ThemeMode.light,
-      home: widget.seenOnboarding ? ChatScreen() : const OnboardingScreen(),
+      home: seenOnboarding ? ChatScreen() : const OnboardingScreen(),
     );
   }
 }

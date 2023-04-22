@@ -1,5 +1,4 @@
 import 'package:aichats/screens/subscription_screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
@@ -61,8 +60,6 @@ class _TextAndVoiceFieldState extends ConsumerState<TextAndVoiceField>
       // アクセス権があるかどうかを確認する
       isSubscribed = entitlement != null;
     });
-
-    super.initState();
   }
 
   @override
@@ -176,9 +173,8 @@ class _TextAndVoiceFieldState extends ConsumerState<TextAndVoiceField>
   void sendTextMessage(String message) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int chatCount = prefs.getInt(_chatCountKey) ?? 0;
-
     if (chatCount > 1 && !isSubscribed) {
-      showCustomModalBottomSheet(context);
+      subscriptionScreen(context);
       return;
     } else {
       if (!isSubscribed) {
