@@ -19,13 +19,28 @@ Future<void> main() async {
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   SharedPreferences prefs = await SharedPreferences.getInstance();
   bool seenOnboarding = prefs.getBool('seen_onboarding') ?? false;
+  Themes currentTheme =
+      prefs.getBool('is_dark_theme') ?? false ? Themes.dark : Themes.light;
   await dotenv.load();
-  runApp(ProviderScope(child: App(seenOnboarding: seenOnboarding)));
+  runApp(
+    ProviderScope(
+      child: App(
+        seenOnboarding: seenOnboarding,
+        currentTheme: currentTheme,
+      ),
+      overrides: [
+        currentThemeProvider.overrideWithValue(currentTheme),
+      ],
+    ),
+  );
 }
 
 class App extends ConsumerWidget {
   final bool seenOnboarding;
-  const App({super.key, required this.seenOnboarding});
+  final Themes currentTheme;
+
+  const App(
+      {super.key, required this.seenOnboarding, required this.currentTheme});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

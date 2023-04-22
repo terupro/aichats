@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../providers/active_theme_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/services.dart';
@@ -37,12 +38,15 @@ class _MyAppBarState extends ConsumerState<MyAppBar> {
                 ? Icons.brightness_4
                 : Icons.brightness_7,
           ),
-          onPressed: () {
-            ref.read(activeThemeProvider.notifier).state =
-                ref.read(activeThemeProvider) == Themes.dark
-                    ? Themes.light
-                    : Themes.dark;
-            HapticFeedback.mediumImpact();
+          onPressed: () async {
+            Themes newTheme = ref.read(activeThemeProvider) == Themes.dark
+                ? Themes.light
+                : Themes.dark;
+            ref.read(activeThemeProvider.notifier).state = newTheme;
+            HapticFeedback
+                .mediumImpact(); // Save the new theme state to SharedPreferences
+            SharedPreferences prefs = await SharedPreferences.getInstance();
+            await prefs.setBool('is_dark_theme', newTheme == Themes.dark);
           },
         ),
       ],
