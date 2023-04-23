@@ -162,7 +162,7 @@ class _TextAndVoiceFieldState extends ConsumerState<TextAndVoiceField>
     }
     if (voiceHandler.speechToText.isListening) {
       await voiceHandler.stopListening();
-      HapticFeedback.mediumImpact();
+      HapticFeedback.lightImpact();
       setListeningState(false);
     } else {
       setListeningState(true);
