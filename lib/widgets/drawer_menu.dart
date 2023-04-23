@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../constants/links.dart';
+import '../utils/urls.dart';
 
 class DrawerMenu extends StatefulWidget {
   const DrawerMenu({super.key});

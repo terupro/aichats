@@ -36,7 +36,7 @@ class _ChatItemState extends State<ChatItem> {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(
-        vertical: 10,
+        vertical: 12,
         horizontal: 12,
       ),
       child: Row(
@@ -80,6 +80,7 @@ class _ChatItemState extends State<ChatItem> {
                     widget.message,
                     style: TextStyle(
                       fontSize: 16,
+                      height: 1.4,
                       color: Theme.of(context).colorScheme.onSecondary,
                     ),
                   ),

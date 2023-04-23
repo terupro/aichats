@@ -1,17 +1,26 @@
-import 'package:aichats/constants/links.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:aichats/utils/urls.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class CustomModalBottomSheet extends StatefulWidget {
-  const CustomModalBottomSheet({Key? key}) : super(key: key);
-  @override
-  _CustomModalBottomSheetState createState() => _CustomModalBottomSheetState();
+void subscriptionScreen(BuildContext context) {
+  showModalBottomSheet(
+    backgroundColor: Colors.transparent,
+    isScrollControlled: true,
+    context: context,
+    builder: (BuildContext context) {
+      return const CustomBottomSheet();
+    },
+  );
 }
 
-class _CustomModalBottomSheetState extends State<CustomModalBottomSheet> {
+class CustomBottomSheet extends StatefulWidget {
+  const CustomBottomSheet({Key? key}) : super(key: key);
+  @override
+  _CustomBottomSheetState createState() => _CustomBottomSheetState();
+}
+
+class _CustomBottomSheetState extends State<CustomBottomSheet> {
   bool isLoading = false;
   @override
   Widget build(BuildContext context) {
@@ -20,9 +29,9 @@ class _CustomModalBottomSheetState extends State<CustomModalBottomSheet> {
         Container(
           height: MediaQuery.of(context).size.height * 0.8,
           margin: const EdgeInsets.only(top: 20),
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.surface,
-            borderRadius: const BorderRadius.only(
+          decoration: const BoxDecoration(
+            color: Color(0xFF303030),
+            borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20),
               topRight: Radius.circular(20),
             ),
@@ -38,7 +47,7 @@ class _CustomModalBottomSheetState extends State<CustomModalBottomSheet> {
                   child: IconButton(
                     icon: const Icon(Icons.close),
                     onPressed: () => Navigator.pop(context),
-                    color: Theme.of(context).colorScheme.onPrimary,
+                    color: Theme.of(context).colorScheme.onSecondary,
                   ),
                 ),
                 Column(
@@ -57,19 +66,19 @@ class _CustomModalBottomSheetState extends State<CustomModalBottomSheet> {
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.onPrimary,
+                        color: Theme.of(context).colorScheme.onSecondary,
                       ),
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'いまだけ3日間無料。いつでもキャンセル可能',
+                      '最初の3日間は無料。いつでもキャンセル可能',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context)
                             .colorScheme
-                            .onPrimary
+                            .onSecondary
                             .withOpacity(0.4),
                       ),
                     ),
@@ -84,13 +93,13 @@ class _CustomModalBottomSheetState extends State<CustomModalBottomSheet> {
                               'net.terupro.aichats.subscription');
                           final prefs = await SharedPreferences.getInstance();
                           prefs.setBool('isSubscribed', true);
+                          Navigator.pop(context);
                         } catch (e) {
                           debugPrint('サブスク登録に失敗しました');
                         } finally {
                           setState(() {
                             isLoading = false;
                           });
-                          Navigator.pop(context);
                         }
                       },
                       child: Container(
@@ -101,25 +110,25 @@ class _CustomModalBottomSheetState extends State<CustomModalBottomSheet> {
                           borderRadius: const BorderRadius.all(
                             Radius.circular(8),
                           ),
-                          color: Theme.of(context).colorScheme.onPrimary,
+                          color: Theme.of(context).colorScheme.secondary,
                         ),
                         child: Text(
                           '無料で始める',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.primary,
+                            color: Theme.of(context).colorScheme.onSecondary,
                           ),
                         ),
                       ),
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      'そのあとは￥480/週',
+                      'そのあとは￥980/月',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.onPrimary,
+                        color: Theme.of(context).colorScheme.onSecondary,
                       ),
                     ),
                     const SizedBox(height: 16),
@@ -133,7 +142,7 @@ class _CustomModalBottomSheetState extends State<CustomModalBottomSheet> {
                             style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.bold,
-                              color: Theme.of(context).colorScheme.onPrimary,
+                              color: Theme.of(context).colorScheme.onSecondary,
                             ),
                           ),
                         ),
@@ -144,7 +153,7 @@ class _CustomModalBottomSheetState extends State<CustomModalBottomSheet> {
                             style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.bold,
-                              color: Theme.of(context).colorScheme.onPrimary,
+                              color: Theme.of(context).colorScheme.onSecondary,
                             ),
                           ),
                         ),
@@ -157,27 +166,24 @@ class _CustomModalBottomSheetState extends State<CustomModalBottomSheet> {
           ),
         ),
         if (isLoading)
-          Container(
-            color: Colors.black.withOpacity(0.5),
-            height: MediaQuery.of(context).size.height * 0.8,
-            child: Center(
-              child: CircularProgressIndicator(
-                color: Theme.of(context).colorScheme.onPrimary,
+          Positioned.fill(
+            child: Container(
+              margin: const EdgeInsets.only(top: 20),
+              decoration: BoxDecoration(
+                color: Colors.black.withOpacity(0.5),
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                ),
+              ),
+              child: Center(
+                child: CircularProgressIndicator(
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
               ),
             ),
           ),
       ],
     );
   }
-}
-
-void subscriptionScreen(BuildContext context) {
-  showModalBottomSheet(
-    backgroundColor: Colors.transparent,
-    isScrollControlled: true,
-    context: context,
-    builder: (BuildContext context) {
-      return const CustomModalBottomSheet();
-    },
-  );
 }

@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'providers/active_theme_provider.dart';
 import 'screens/chat_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'constants/themes.dart';
+import 'utils/themes.dart';
 
 final _configuration =
     PurchasesConfiguration('appl_mGrBTwcMzFnFWhKUJikpGashbYj');
@@ -20,7 +20,7 @@ Future<void> main() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   bool seenOnboarding = prefs.getBool('seen_onboarding') ?? false;
   Themes currentTheme =
-      prefs.getBool('is_dark_theme') ?? false ? Themes.dark : Themes.light;
+      prefs.getBool('is_dark_theme') ?? true ? Themes.dark : Themes.light;
   await dotenv.load();
   runApp(
     ProviderScope(

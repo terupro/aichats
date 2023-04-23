@@ -1,13 +1,13 @@
+import 'package:aichats/providers/chats_provider.dart';
 import 'package:aichats/screens/subscription_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../models/chat_model.dart';
-import '../providers/chats_provider.dart';
 import '../services/ai_handler.dart';
 import '../services/voice_handler.dart';
 import 'toggle_button.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 const _chatCountKey = 'chat_count';
 
@@ -130,8 +130,8 @@ class _TextAndVoiceFieldState extends ConsumerState<TextAndVoiceField>
           bottom: 0,
           top: 0,
           child: SizedBox(
-            width: MediaQuery.of(context).size.width * 0.15, // 画面幅の 15% を使用
-            height: MediaQuery.of(context).size.height * 0.08, // 画面高さの 8% を使用
+            width: MediaQuery.of(context).size.width * 0.15,
+            height: MediaQuery.of(context).size.height * 0.08,
             child: ToggleButton(
               isListening: _isListening,
               isReplying: _isReplying,

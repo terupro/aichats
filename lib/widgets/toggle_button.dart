@@ -32,7 +32,7 @@ class _ToggleButtonState extends State<ToggleButton>
   @override
   Widget build(BuildContext context) {
     final iconColor = Theme.of(context).colorScheme.onSecondary;
-    final padding = MediaQuery.of(context).size.width * 0.025; // 画面幅の 3% を使用
+    final padding = MediaQuery.of(context).size.width * 0.025;
 
     return Stack(
       alignment: Alignment.center,
