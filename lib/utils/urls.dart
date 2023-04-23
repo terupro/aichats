@@ -11,8 +11,7 @@ final Uri helpUrl = Uri.parse(
     'https://celestial-clam-8a3.notion.site/AIChats-4294b075a76341d8955ec3374aa5f8db');
 
 void shareApp() async {
-  await Share.share(
-      'AIChatsアプリで手軽にAIと会話しよう！最先端AIと、音声やテキストを使って会話できます。友達や家族と共有して、みんなでAIとの会話を楽しんでみませんか？シェアリンクはこちら：https://example.com/aichats」 https://example.com/aichats');
+  await Share.share('AIChatsアプリで最先端AIと会話しよう！人工知能の力で日常をこれまで以上に便利に楽しくしませんか？');
 }
 
 Future<void> launchPolicyUrl() async {
