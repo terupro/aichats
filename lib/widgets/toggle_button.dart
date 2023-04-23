@@ -49,7 +49,6 @@ class _ToggleButtonState extends State<ToggleButton>
               : (widget._inputMode == InputMode.text
                   ? widget._sendTextMessage
                   : () {
-                      HapticFeedback.mediumImpact();
                       widget._sendVoiceMessage();
                     }),
           child: Container(

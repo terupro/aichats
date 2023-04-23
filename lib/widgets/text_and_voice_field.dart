@@ -1,6 +1,7 @@
 import 'package:aichats/providers/chats_provider.dart';
 import 'package:aichats/screens/subscription_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -161,6 +162,7 @@ class _TextAndVoiceFieldState extends ConsumerState<TextAndVoiceField>
     }
     if (voiceHandler.speechToText.isListening) {
       await voiceHandler.stopListening();
+      HapticFeedback.mediumImpact();
       setListeningState(false);
     } else {
       setListeningState(true);
