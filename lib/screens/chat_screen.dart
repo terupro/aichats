@@ -11,45 +11,49 @@ class ChatScreen extends StatelessWidget {
   ChatScreen({Key? key}) : super(key: key);
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  final _focusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: Scaffold(
-        key: _scaffoldKey,
-        appBar: MyAppBar(scaffoldKey: _scaffoldKey),
-        drawer: const DrawerMenu(),
-        body: Stack(
-          children: [
-            Column(
-              children: [
-                Expanded(
-                  child: Consumer(builder: (context, ref, child) {
-                    final chats = ref.watch(chatsProvider).reversed.toList();
-                    return chats.isNotEmpty
-                        ? ListView.builder(
-                            reverse: true,
-                            itemCount: chats.length,
-                            itemBuilder: (context, index) => ChatItem(
-                              message: chats[index].message,
-                              isMe: chats[index].isMe,
-                              typingAnimation: chats[index].typingAnimation,
-                            ),
-                          )
-                        : _buildEmptyMessageUI(context);
-                  }),
-                ),
-                const Padding(
-                  padding: EdgeInsets.all(12.0),
-                  child: TextAndVoiceField(),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-              ],
-            ),
-          ],
+    return Focus(
+      focusNode: _focusNode,
+      child: GestureDetector(
+        onTap: _focusNode.requestFocus,
+        child: Scaffold(
+          key: _scaffoldKey,
+          appBar: MyAppBar(scaffoldKey: _scaffoldKey),
+          drawer: const DrawerMenu(),
+          body: Stack(
+            children: [
+              Column(
+                children: [
+                  Expanded(
+                    child: Consumer(builder: (context, ref, child) {
+                      final chats = ref.watch(chatsProvider).reversed.toList();
+                      return chats.isNotEmpty
+                          ? ListView.builder(
+                              reverse: true,
+                              itemCount: chats.length,
+                              itemBuilder: (context, index) => ChatItem(
+                                message: chats[index].message,
+                                isMe: chats[index].isMe,
+                                typingAnimation: chats[index].typingAnimation,
+                              ),
+                            )
+                          : _buildEmptyMessageUI(context);
+                    }),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.all(12.0),
+                    child: TextAndVoiceField(),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
