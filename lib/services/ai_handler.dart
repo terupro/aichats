@@ -49,7 +49,7 @@ class AIHandler {
   }
 
   void dispose() {
-    _openAI.close();
+    _openAI.cancelAIGenerate();
     _messageHistory.clear();
   }
 }
