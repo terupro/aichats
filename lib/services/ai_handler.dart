@@ -18,7 +18,8 @@ class AIHandler {
     try {
       _messageHistory.add({
         "role": "system",
-        "content": "あなたは賢くて親しみやすいAIアシスタントです。ユーザーの助けになる回答を簡潔に提供してください。",
+        "content":
+            "あなたは親しみやすくフレンドリーなAIアシスタントです。会話の中でユーモアを交えつつ、ユーザーに対して助けになるような回答を提供してください。",
       });
       _messageHistory.add({
         "role": "user",
@@ -27,6 +28,8 @@ class AIHandler {
 
       final request = ChatCompleteText(
         messages: _messageHistory,
+        temperature: 0.5,
+        presencePenalty: 0.2,
         maxToken: 400,
         model: ChatModel.ChatGptTurbo0301Model,
       );
