@@ -10,7 +10,9 @@ class AIHandler {
     ),
   );
 
-  List<Map<String, String>> _messageHistory = [];
+  List<Map<String, String>> _messageHistory;
+
+  AIHandler() : _messageHistory = [];
 
   Future<String> getResponse(String message) async {
     try {
@@ -38,6 +40,7 @@ class AIHandler {
       }
       return '問題が発生しました。しばらくしてから再度お試しください。';
     } catch (e) {
+      print('エラーが発生しました: ${e.toString()}');
       return '問題が発生しました。しばらくしてから再度お試しください。';
     }
   }

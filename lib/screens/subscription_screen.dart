@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:aichats/utils/urls.dart';
 import 'package:flutter/material.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
@@ -12,6 +13,11 @@ void subscriptionScreen(BuildContext context) {
       return const CustomBottomSheet();
     },
   );
+}
+
+String formatNumberWithCommas(int number) {
+  final formatter = NumberFormat('#,###');
+  return formatter.format(number);
 }
 
 class CustomBottomSheet extends StatefulWidget {
@@ -124,7 +130,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      'そのあとは￥980/月',
+                      "そのあとは${formatNumberWithCommas(1280)}/月",
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
