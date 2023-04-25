@@ -1,24 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:aichats/utils/urls.dart';
 import 'package:flutter/material.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-void subscriptionScreen(BuildContext context) {
-  showModalBottomSheet(
-    backgroundColor: Colors.transparent,
-    isScrollControlled: true,
-    context: context,
-    builder: (BuildContext context) {
-      return const CustomBottomSheet();
-    },
-  );
-}
-
-String formatNumberWithCommas(int number) {
-  final formatter = NumberFormat('#,###');
-  return formatter.format(number);
-}
 
 class CustomBottomSheet extends StatefulWidget {
   const CustomBottomSheet({Key? key}) : super(key: key);
@@ -28,34 +13,6 @@ class CustomBottomSheet extends StatefulWidget {
 
 class _CustomBottomSheetState extends State<CustomBottomSheet> {
   bool isLoading = false;
-
-  void restoreButton() async {
-    try {
-      setState(() {
-        isLoading = true;
-      });
-      final entitlements = await Purchases.restorePurchases(); // 購入履歴を復元
-      if (entitlements.activeSubscriptions.isNotEmpty) {
-        // 何かしらの購入が復元された場合
-        final prefs = await SharedPreferences.getInstance();
-        prefs.setBool('isSubscribed', true);
-        Navigator.pop(context);
-      } else {
-        // 購入が復元されなかった場合
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('復元できる購入がありませんでした。'),
-          ),
-        );
-      }
-    } catch (e) {
-      debugPrint('購入履歴の復元に失敗しました');
-    } finally {
-      setState(() {
-        isLoading = false;
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -119,24 +76,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                     ),
                     const SizedBox(height: 16),
                     GestureDetector(
-                      onTap: () async {
-                        try {
-                          setState(() {
-                            isLoading = true;
-                          });
-                          await Purchases.purchaseProduct(
-                              'net.terupro.aichats.subscription');
-                          final prefs = await SharedPreferences.getInstance();
-                          prefs.setBool('isSubscribed', true);
-                          Navigator.pop(context);
-                        } catch (e) {
-                          debugPrint('サブスク登録に失敗しました');
-                        } finally {
-                          setState(() {
-                            isLoading = false;
-                          });
-                        }
-                      },
+                      onTap: _subscribe,
                       child: Container(
                         width: double.infinity,
                         height: 48,
@@ -193,7 +133,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                           ),
                         ),
                         TextButton(
-                          onPressed: restoreButton,
+                          onPressed: _restorePurchases,
                           child: Text(
                             '復元',
                             style: TextStyle(
@@ -224,7 +164,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
               ),
               child: Center(
                 child: CircularProgressIndicator(
-                  color: Theme.of(context).colorScheme.onPrimary,
+                  color: Theme.of(context).colorScheme.onSecondary,
                 ),
               ),
             ),
@@ -232,4 +172,84 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
       ],
     );
   }
+
+  String formatNumberWithCommas(int number) {
+    final formatter = NumberFormat('#,###');
+    return formatter.format(number);
+  }
+
+  Future<void> _subscribe() async {
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      await Purchases.purchaseProduct('net.terupro.aichats.subscription');
+      final prefs = await SharedPreferences.getInstance();
+      prefs.setBool('isSubscribed', true);
+      Navigator.pop(context);
+    } catch (e) {
+      debugPrint('サブスク登録に失敗しました');
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  Future<void> _restorePurchases() async {
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      final entitlements = await Purchases.restorePurchases();
+      if (entitlements.activeSubscriptions.isNotEmpty) {
+        final prefs = await SharedPreferences.getInstance();
+        prefs.setBool('isSubscribed', true);
+        Navigator.pop(context);
+      } else {
+        showRestoreDialog(context);
+      }
+    } catch (e) {
+      debugPrint('購入履歴の復元に失敗しました');
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+}
+
+void subscriptionScreen(BuildContext context) {
+  showModalBottomSheet(
+    backgroundColor: Colors.transparent,
+    isScrollControlled: true,
+    context: context,
+    builder: (BuildContext context) {
+      return const CustomBottomSheet();
+    },
+  );
+}
+
+void showRestoreDialog(BuildContext context) {
+  showCupertinoDialog(
+    context: context,
+    builder: (context) {
+      return CupertinoTheme(
+        data: const CupertinoThemeData(brightness: Brightness.light),
+        child: CupertinoAlertDialog(
+          title: const Text('購入の復元', style: TextStyle(fontSize: 16)),
+          content:
+              const Text('復元できる購入がありませんでした。', style: TextStyle(fontSize: 12)),
+          actions: [
+            CupertinoDialogAction(
+              child: const Text('OK', style: TextStyle(color: Colors.blue)),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
+      );
+    },
+  );
 }
