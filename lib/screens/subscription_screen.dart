@@ -28,6 +28,35 @@ class CustomBottomSheet extends StatefulWidget {
 
 class _CustomBottomSheetState extends State<CustomBottomSheet> {
   bool isLoading = false;
+
+  void restoreButton() async {
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      final entitlements = await Purchases.restorePurchases(); // 購入履歴を復元
+      if (entitlements.activeSubscriptions.isNotEmpty) {
+        // 何かしらの購入が復元された場合
+        final prefs = await SharedPreferences.getInstance();
+        prefs.setBool('isSubscribed', true);
+        Navigator.pop(context);
+      } else {
+        // 購入が復元されなかった場合
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('復元できる購入がありませんでした。'),
+          ),
+        );
+      }
+    } catch (e) {
+      debugPrint('購入履歴の復元に失敗しました');
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -156,6 +185,17 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                           onPressed: launchRuleUrl,
                           child: Text(
                             '利用規約',
+                            style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).colorScheme.onSecondary,
+                            ),
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: restoreButton,
+                          child: Text(
+                            '復元',
                             style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.bold,
