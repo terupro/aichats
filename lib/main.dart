@@ -11,26 +11,26 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'utils/themes.dart';
 
 final _configuration =
-    PurchasesConfiguration('appl_mGrBTwcMzFnFWhKUJikpGashbYj');
+    PurchasesConfiguration(dotenv.env['PURCHASES_CONFIGURATION']!);
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load();
   await Purchases.configure(_configuration);
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   SharedPreferences prefs = await SharedPreferences.getInstance();
   bool seenOnboarding = prefs.getBool('seen_onboarding') ?? false;
   Themes currentTheme =
       prefs.getBool('is_dark_theme') ?? true ? Themes.dark : Themes.light;
-  await dotenv.load();
   runApp(
     ProviderScope(
+      overrides: [
+        currentThemeProvider.overrideWithValue(currentTheme),
+      ],
       child: App(
         seenOnboarding: seenOnboarding,
         currentTheme: currentTheme,
       ),
-      overrides: [
-        currentThemeProvider.overrideWithValue(currentTheme),
-      ],
     ),
   );
 }
