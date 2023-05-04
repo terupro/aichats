@@ -23,14 +23,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   Widget _indicator(bool isActive) {
+    double indicatorSize = MediaQuery.of(context).size.width * 0.02;
     return AnimatedContainer(
       duration: const Duration(milliseconds: 150),
       margin: const EdgeInsets.symmetric(horizontal: 4.0),
       height: 8.0,
-      width: isActive ? 24.0 : 16.0,
+      width: isActive ? indicatorSize * 3 : indicatorSize * 2,
       decoration: BoxDecoration(
         color: isActive ? Colors.blue : Colors.grey,
-        borderRadius: const BorderRadius.all(Radius.circular(12)),
+        borderRadius: BorderRadius.all(Radius.circular(indicatorSize * 1.5)),
       ),
     );
   }
@@ -39,15 +40,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF303030),
-      body: AnnotatedRegion<SystemUiOverlayStyle>(
-        value: SystemUiOverlayStyle.light,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 40.0),
+      body: SafeArea(
+        child: AnnotatedRegion<SystemUiOverlayStyle>(
+          value: SystemUiOverlayStyle.light,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SizedBox(
-                height: 600,
+                height: MediaQuery.of(context).size.height * 0.8,
                 child: PageView(
                   physics: const ClampingScrollPhysics(),
                   controller: _pageController,
@@ -94,20 +94,23 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             mainAxisSize: MainAxisSize.min,
-                            children: const [
+                            children: [
                               Text(
                                 '次へ進む',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 24.0,
+                                  fontSize:
+                                      MediaQuery.of(context).size.width * 0.05,
                                 ),
                               ),
-                              SizedBox(width: 10.0),
+                              SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.02),
                               Icon(
                                 Icons.arrow_forward_ios_rounded,
                                 color: Colors.white,
-                                size: 30.0,
+                                size: MediaQuery.of(context).size.width * 0.06,
                               ),
                             ],
                           ),
@@ -121,7 +124,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       ),
       bottomSheet: _currentPage == 3
           ? Container(
-              height: 100.0,
+              constraints: BoxConstraints(
+                maxHeight: MediaQuery.of(context).size.height * 0.3,
+              ),
               width: double.infinity,
               color: const Color(0xFF303030),
               child: GestureDetector(
@@ -162,17 +167,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Center(
-            child: Image(
-              image: AssetImage(image),
-              height: 300.0,
-              width: 300.0,
+            child: AspectRatio(
+              aspectRatio: 1.0,
+              child: Image(
+                image: AssetImage(image),
+                fit: BoxFit.contain,
+              ),
             ),
           ),
           const SizedBox(height: 30.0),
           Text(
             text,
-            style: const TextStyle(
-              fontSize: 28.0,
+            style: TextStyle(
+              fontSize: MediaQuery.of(context).size.width * 0.06,
               color: Colors.white,
               fontWeight: FontWeight.bold,
             ),
