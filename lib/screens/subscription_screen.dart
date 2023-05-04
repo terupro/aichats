@@ -51,7 +51,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                         height: MediaQuery.of(context).size.height * 0.35,
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 16),
                     Text(
                       "回数制限なしで、\nチャットAIを使いこなそう。",
                       textAlign: TextAlign.center,
@@ -63,7 +63,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      '最初の3日間は無料。いつでもキャンセル可能',
+                      'いまだけ3日間無料。いつでもキャンセル可能',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 12,
@@ -88,7 +88,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                           color: Theme.of(context).colorScheme.secondary,
                         ),
                         child: Text(
-                          '無料で始める',
+                          '無料で開始',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -99,7 +99,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      "そのあとは${formatNumberWithCommas(1280)}/月",
+                      "そのあとは￥${formatNumberWithCommas(1280)}/月",
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
