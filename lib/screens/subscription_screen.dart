@@ -100,7 +100,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                       ),
                       const SizedBox(height: 16),
                       Text(
-                        "そのあとは￥${formatNumberWithCommas(1280)}/月",
+                        "そのあとは￥${formatNumberWithCommas(980)}/月",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
